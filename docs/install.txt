@@ -1,0 +1,1 @@
+Install like any regular extension (you know the drill, don't you ?)

@@ -19,15 +19,13 @@ function initTableParagraph () {
 
 
       function initJSON () {
-        $('a.eznode').remote('#explorer tbody', {hashPrefix: 'node'},function() {alert("loaded");});
-//         jQuery(" .eznode").removeClass("eznode").click(function (){
-//             $.getJSON(this.href, { datamap: "1" }, displayNode);
-//             return false;
-//           });
-         jQuery(" .ezchildren").removeClass("ezchildren").click(function (){
-             $('#history').append("<li><a class='ezchildren' href='"+this.href+"'>"+this.innerHTML+"</a>");
-             $.getJSON(this.href, {}, displayList);
-             $(this).css("cursor",'wait');
+//        $('a.eznode').remote('#explorer tbody', {hashPrefix: 'node'},function() {alert("loaded");});
+         jQuery(" .eznode").removeClass("eznode").click(function (){
+             var para_node=this.href.split("/");
+             var nodeid=para_node[para_node.length-1];
+             $('h1#title').html(this.innerHTML);
+             $('#history').append("<li><a class='eznode' href='/json/explorer/"+nodeid+"'>"+this.innerHTML+"</a>");
+             $.getJSON("/json/list/"+nodeid, { owner:'1' }, displayNode);
              return false;
            });
       }
@@ -36,11 +34,11 @@ function initTableParagraph () {
           var html="";
 //        var url= $base + node.NodeID ;
            
-//        $('#history').append("<li><a class='eznode' href='"+url+"'>"+node[0].Name+"</a>");
       for (var i = 0; i < nodes.length; i++) {
         var html = html+TrimPath.processDOMTemplate("node_jst", nodes[i]);
       }
-      $('#explorer tbody').append(html);
+      $('#explorer tbody').html(html);
+      initJSON();
     }
  
       jQuery(function(){
@@ -62,8 +60,9 @@ if(!$.isFunction($.fn['tablesorter'])) {
         $('a.eznode').remote('#node', function() {alert("loaded");});
    
 //        $.ajaxHistory.initialize();
-        $.ajaxHistory.initialize(function (){$.getJSON("/json/list/"+parentnodeid, {owner:1 }, displayNode)});
+//        $.ajaxHistory.initialize(function (){$.getJSON("/json/list/"+parentnodeid, {owner:1 }, displayNode)});
         //$.ajaxHistory.initialize(function (){alert("no param");});
+          $('#history').append("<li><a class='eznode' href='/json/explorer/"+parentnodeid+"'>Top</a>");
           $.getJSON("/json/list/"+parentnodeid, {owner:1 }, displayNode);
       });
     </script>
@@ -82,20 +81,20 @@ if(!$.isFunction($.fn['tablesorter'])) {
 <tr>
 <td><a href="/json/explorer/${NodeID}" class="eznode">${Name}</a></td>
 <td>${ClassName}</td>
-
 <td class="modified">${formatDate(ModifiedSubNode)}</td>
 <td class="owner"><a href="/redirect/mainnode/${object.Owner.ID}">${object.Owner.Name}</a></td>
-<td class="section">${object.Section}</td>
+<td class="section$(object.SectionID">${object.SectionID}</td>
 <td>
+edit?
 </td>
 </tr>
 
 </textarea>
-
+<h1 id="title"></h1>
 <table class="explorer" id="explorer">
 <thead>
 <tr>
-<th>Name</th><th>type</th><th>created</th><th>Owner</th>
+<th>Name</th><th>type</th><th>created</th><th>Owner</th><th>Section</th><th>Tool</th>
 </tr>
 </th>
 </tr>

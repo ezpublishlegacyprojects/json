@@ -25,7 +25,7 @@ Yes, ajax and all that jazz.
 1. Context
 ----------
 
-Very alpha thing. I need help to see how to head that beast.
+Alpha thing. I need help to see how to head that beast.
 
 The general idea is to get via json all what you can do with the fetch, and use a template system on the client to display it.
 
@@ -64,9 +64,10 @@ Want to see the json directly ?
 json/list/2?datamap&owner
 
 want to see how to display the result 
-json/debug
+json/node/2?debug=1&datamap
 
-a draft kind of non working yet (but using the template system on the client side)
+And now working and  using the template system on the client side
+
 json/explorer
 
 4. I want classes on the client side !
